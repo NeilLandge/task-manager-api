@@ -48,7 +48,7 @@ jobs:
     name: Build and Push Image
     runs-on: ubuntu-latest
     needs: test
-    if: github.event_name == "push"
+    if: github.event_name == 'push'
     permissions:
       contents: read
       packages: write
@@ -74,7 +74,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=sha,prefix=${{ github.ref_name }}-
-            type=raw,value=latest,enable=${{ github.ref == "refs/heads/main" }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
       - name: Build and push Docker image
         id: build
         uses: docker/build-push-action@v5
@@ -91,7 +91,7 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == "refs/heads/develop"
+    if: github.ref == 'refs/heads/develop'
     environment: staging
     steps:
       - name: Deploy via SSH
@@ -110,7 +110,7 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     needs: build
-    if: github.ref == "refs/heads/main"
+    if: github.ref == 'refs/heads/main'
     environment: production
     steps:
       - name: Deploy via SSH
